@@ -1,0 +1,76 @@
+{
+  "invoiceNumber": "18499569",
+  "orderNumber": "158970",
+  "invoiceDate": "2026-01-15",
+  "taxPointDate": "2026-01-15",
+  "currency": "GBP",
+  "totalAmount": "96.00",
+  "totalGoodsAmount": "80.00",
+  "totalTaxableAmount": "80.00",
+  "totalTaxAmount": "16.00",
+  "sender": {
+    "taxNumber": "533 2605 44",
+    "phone": "07738134111",
+    "addresses": [
+      {
+        "type": "Billing",
+        "name": "Speedy Hire",
+        "line1": "8 Quarry St",
+        "line2": "Quarry Bank",
+        "line3": "Dudley",
+        "line4": "West Midlands",
+        "postalCode": "W3 9EH",
+        "countryCode": "GB"
+      }
+    ]
+  },
+  "receiver": {
+    "contactName": "William",
+    "emailAddress": "kier.invoices@openecx.co.uk",
+    "addresses": [
+      {
+        "type": "InvoiceTo",
+        "name": "Kier Construction Central Sout",
+        "line1": "Kier FSSC",
+        "line2": "6th Floor, St John House",
+        "line3": "Queen Street",
+        "line4": "Manchester",
+        "postalCode": "M2 5JB",
+        "countryCode": "UK"
+      }
+    ]
+  },
+  "lineItems": [
+    {
+      "lineNumber": "1",
+      "itemCode": "DEP19L",
+      "description": "Bottle Deposit/Refund (19L)",
+      "quantity": "10",
+      "unitOfMeasure": "EA",
+      "unitAmount": "6.00",
+      "totalAmount": "60.00",
+      "taxAmount": "12.00",
+      "taxCode": "S",
+      "effectiveTaxRate": "20.00"
+    },
+    {
+      "lineNumber": "2",
+      "itemCode": "SAND25",
+      "description": "Building Sand 25kg Bag",
+      "quantity": "5",
+      "unitOfMeasure": "EA",
+      "unitAmount": "4.00",
+      "totalAmount": "20.00",
+      "taxAmount": "4.00",
+      "taxCode": "S",
+      "effectiveTaxRate": "20.00"
+    }
+  ],
+  "taxSummaries": [
+    {
+      "taxCode": "S",
+      "effectiveTaxRate": "20.00",
+      "taxAmount": "16.00"
+    }
+  ]
+}

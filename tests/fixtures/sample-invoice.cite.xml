@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SAMPLE CITE XML - Sales Invoice (DocType 380)
+  ============================================================================
+  RECONSTRUCTED, not a captured production document.
+
+  Built from the authoritative "ITX Map - CITE Common qualifiers / CITE Mapping
+  Specification - 19 Feb 2025" page in the TRADEX Confluence space. Every element
+  name, composite and E.nnnn qualifier used below is taken from that spec.
+
+  This is a good-quality *known-good* fixture for the grad project: the figures
+  reconcile (2 lines: GBP 80.00 goods + 16.00 VAT = 96.00 total).
+
+  ONE INTERPRETIVE CHOICE TO VERIFY: the spec lists segment groups (SG01, SG08,
+  SG50, SG71, SG72) but its example fragments show the flat S.* segment tags
+  without the group wrapper elements. Here, line-item child segments (IMD/QTY/
+  MOA/PRI/TAX) are nested INSIDE <S.LIN.LineItem> so each line is unambiguously
+  parseable. Before locking this in as the golden test fixture, confirm the real
+  grouping against an actual CITE document pulled from the Tradex filesystem/DB.
+  ============================================================================
+-->
+<DOCUMENT DocNumber="18499569" DocType="380" Version="2.01.02">
+
+  <!-- Interchange / message envelope (UNB / UNH / BGM) -->
+  <S.UNB.InterchangeHeader E.0020.InterchangeControlReference.D="XXXXXX">
+    <C.S002.InterchangeSender E.0004.SenderIdentification.D="Speedy Hire" E.0007.PartnerIdentificationCode.Q="ZZZ" E.0008.AddressForReverseRouting.D=""/>
+    <C.S003.InterchangeRecipient E.0010.RecipientIdentification.D="140005" E.0007.PartnerIdentificationCode.Q="ZZZ" E.0014.RoutingAddress.D="DIVISION1"/>
+  </S.UNB.InterchangeHeader>
+
+  <S.UNH.MessageHeader E.0062.MessageReferenceNumber.D="0050133072">
+    <C.S009.MessageIdentifier E.0054.MessageTypeReleaseNumber.D="92.1" E.0065.MessageTypeIdentifier.C="" E.0052.MessageTypeVersionNumber.D="D" E.0051.ControllingAgency.D="UN" E.0057.AssociationAssigned.C="EAN0006"/>
+  </S.UNH.MessageHeader>
+
+  <S.BGM.BeginingOfMessage E.4343.ResponseType.C="AD" E.1225.MessageFunction.C="" E.1004.DocumentNumber.D="18499569">
+    <C.C002.DocumentName E.1001.DocumentName.C="380"/>
+  </S.BGM.BeginingOfMessage>
+
+  <!-- Invoice date (qualifier 137) -->
+  <S.DTM.DateTimePeriod>
+    <C.C507.DateTimePeriod E.2380.DateTimePeriod.D="15 Jan 2026" E.2379.DateTimePeriodFormat.Q="DD MON CCYY" E.2005.DateTimePeriod.Q="137"/>
+  </S.DTM.DateTimePeriod>
+
+  <!-- Tax point date (qualifier 131) -->
+  <S.DTM.DateTimePeriod>
+    <C.C507.DateTimePeriod E.2380.DateTimePeriod.D="15 Jan 2026" E.2379.DateTimePeriodFormat.Q="DD MON CCYY" E.2005.DateTimePeriod.Q="131"/>
+  </S.DTM.DateTimePeriod>
+
+  <!-- Header references (SG01.RFF): Order number (ON), Recipient account (IT) -->
+  <S.RFF.Reference>
+    <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="158970"/>
+  </S.RFF.Reference>
+  <S.RFF.Reference>
+    <C.C506.Reference E.1153.Reference.Q="IT" E.1154.ReferenceNumber.D="410442"/>
+  </S.RFF.Reference>
+
+  <!-- Supplier (SG08.NAD, party qualifier SU) -->
+  <S.NAD.NameAndAddress E.3035.Party.Q="SU">
+    <C.C082.PartyIdentification E.3039.PartyIdentification.D="Speedy Hire" E.1131.CodeList.Q="164" E.3055.CodeListRespAgency.C="136"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Speedy Hire"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="8 Quarry St"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Quarry Bank"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Dudley"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="West Midlands"/>
+    <C.C059.Street E.3251.PostCode.D="W3 9EH" E.3207.Country.C="GB"/>
+    <S.CTA.ContactInformation>
+      <C.C056.DepartmentOrEmployee E.3412.DepartmentOrEmployee.D="Simon Tomkins"/>
+    </S.CTA.ContactInformation>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="07738134111" E.3155.CommunicationChannel.Q="TE"/>
+    </S.COM.CommunicationContact>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="simon.tomkins@speedyhire.com" E.3155.CommunicationChannel.Q="EM"/>
+    </S.COM.CommunicationContact>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="VA" E.1154.ReferenceNumber.D="533 2605 44"/>
+    </S.RFF.Reference>
+  </S.NAD.NameAndAddress>
+
+  <!-- Buyer (SG08.NAD, party qualifier BY) -->
+  <S.NAD.NameAndAddress E.3035.Party.Q="BY">
+    <C.C082.PartyIdentification E.3039.PartyIdentification.D="Kier Construction Central Sout" E.1131.CodeList.Q="164" E.3055.CodeListRespAgency.C="136"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Kier Construction Central Sout"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Kier FSSC"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="6th Floor, St John House"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Queen Street"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Manchester"/>
+    <C.C059.Street E.3251.PostCode.D="M2 5JB" E.3207.Country.C="UK"/>
+    <S.CTA.ContactInformation>
+      <C.C056.DepartmentOrEmployee E.3412.DepartmentOrEmployee.D="William"/>
+    </S.CTA.ContactInformation>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="kier.invoices@openecx.co.uk" E.3155.CommunicationChannel.Q="EM"/>
+    </S.COM.CommunicationContact>
+  </S.NAD.NameAndAddress>
+
+  <!-- Payment terms (SG04.PAT) -->
+  <S.PAT.TermsOfPaymentBasis E.4279.TermsOfPaymentType.Q="ZZZ">
+    <C.C110.TermsOfPayment E.4276.TermsOfPayment.D="Net 30 Days"/>
+  </S.PAT.TermsOfPaymentBasis>
+
+  <!-- ============================ LINE ITEMS (SG50) ============================ -->
+
+  <!-- Line 1: 10 EA @ 6.00 = 60.00 net, VAT S 20% = 12.00 -->
+  <S.LIN.LineItem E.1082.LineItemNumber.D="1">
+    <C.C212.ItemNumberIdentification E.7143.ItemNumberType.C="SA" E.7140.ItemNumber.D="DEP19L"/>
+    <S.IMD.ItemDescription E.7077.ItemDescriptionType.C="F">
+      <C.C273.ItemDescription E.7008.ItemDescription.D="Bottle Deposit/Refund (19L)" E.7009.ItemDescriptionIdentification.C="4"/>
+    </S.IMD.ItemDescription>
+    <S.QTY.Quantity>
+      <C.C186.Quantity E.6063.Quantity.Q="47" E.6060.Quantity.D="10" E.6411.UnitOfMeasurement.Q="EA"/>
+    </S.QTY.Quantity>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="203" E.5004.MonetaryAmount.D="60.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="12.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.PRI.Price>
+      <C.C509.PriceIformation E.5284.UnitPriceBasis.C="EA" E.6411.UnitOfMeasurement.Q="EA" E.5387.PriceType.Q="GRP" E.5125.Price.Q="CAL" E.5118.Price.D="6.00"/>
+    </S.PRI.Price>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="158970"/>
+    </S.RFF.Reference>
+    <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+      <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+      <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+    </S.TAX.DutyTaxFee>
+  </S.LIN.LineItem>
+
+  <!-- Line 2: 5 EA @ 4.00 = 20.00 net, VAT S 20% = 4.00 -->
+  <S.LIN.LineItem E.1082.LineItemNumber.D="2">
+    <C.C212.ItemNumberIdentification E.7143.ItemNumberType.C="SA" E.7140.ItemNumber.D="SAND25"/>
+    <S.IMD.ItemDescription E.7077.ItemDescriptionType.C="F">
+      <C.C273.ItemDescription E.7008.ItemDescription.D="Building Sand 25kg Bag" E.7009.ItemDescriptionIdentification.C="4"/>
+    </S.IMD.ItemDescription>
+    <S.QTY.Quantity>
+      <C.C186.Quantity E.6063.Quantity.Q="47" E.6060.Quantity.D="5" E.6411.UnitOfMeasurement.Q="EA"/>
+    </S.QTY.Quantity>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="203" E.5004.MonetaryAmount.D="20.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="4.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.PRI.Price>
+      <C.C509.PriceIformation E.5284.UnitPriceBasis.C="EA" E.6411.UnitOfMeasurement.Q="EA" E.5387.PriceType.Q="GRP" E.5125.Price.Q="CAL" E.5118.Price.D="4.00"/>
+    </S.PRI.Price>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="158970"/>
+    </S.RFF.Reference>
+    <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+      <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+      <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+    </S.TAX.DutyTaxFee>
+  </S.LIN.LineItem>
+
+  <!-- ============================ SUMMARY (SG71) ============================ -->
+  <!-- Goods 79 / Taxable 125 / Tax 176 / Invoice Total 77 -->
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="79" E.5004.MonetaryAmount.D="80.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="125" E.5004.MonetaryAmount.D="80.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="176" E.5004.MonetaryAmount.D="16.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="77" E.5004.MonetaryAmount.D="96.00"/>
+  </S.MOA.MonetaryAmount>
+
+  <!-- Tax subtotal (SG72): VAT S 20% = 16.00 -->
+  <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+    <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+    <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+  </S.TAX.DutyTaxFee>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="16.00"/>
+  </S.MOA.MonetaryAmount>
+
+  <!-- Currency (CUX) -->
+  <S.CUX.Currencies>
+    <C.C504.CurrencyDetails E.6347.CurrencyDetail.Q="1" E.6345.Currency.C="GBP"/>
+  </S.CUX.Currencies>
+
+</DOCUMENT>
