@@ -10,6 +10,7 @@ from .validator import validate_invoice
 
 
 def validate_and_convert(xml_text: str, today: date | None = None) -> EngineResult:
+    # this is the little brain of the project: cli/ui code should call this, not copy it
     try:
         invoice = parse_invoice(xml_text)
     except SAXParseException as exc:
@@ -29,6 +30,7 @@ def validate_and_convert(xml_text: str, today: date | None = None) -> EngineResu
         return EngineResult(invoice=None, issues=[issue])
 
     issues = validate_invoice(invoice, today=today)
+    # no json if the invoice is dodgy, otherwise it looks like we trust bad data
     json_document = None if issues else invoice_to_json(invoice)
 
     return EngineResult(invoice=invoice, issues=issues, json_document=json_document)

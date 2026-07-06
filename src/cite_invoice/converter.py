@@ -6,6 +6,7 @@ from .models import FieldValue, Invoice, LineItem, Party, TaxSummary
 
 
 def invoice_to_json(invoice: Invoice) -> dict[str, Any]:
+    # keep this boring on purpose: parsed model in, expected json field names out
     document: dict[str, Any] = {
         "invoiceNumber": _value(invoice.invoice_number),
         "orderNumber": _value(invoice.order_number),

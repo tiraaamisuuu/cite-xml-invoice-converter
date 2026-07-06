@@ -8,6 +8,7 @@ from xml.sax.xmlreader import AttributesImpl
 
 @dataclass
 class CiteNode:
+    # tiny xml tree wrapper so the rest of the code can keep hold of line numbers
     name: str
     attrs: dict[str, str]
     line: int | None
@@ -48,6 +49,7 @@ class _TreeBuilder(handler.ContentHandler):
         self._locator = locator
 
     def startElement(self, name: str, attrs: AttributesImpl) -> None:
+        # sax gives us the source line here, which is handy for useful validation errors
         line = self._locator.getLineNumber() if self._locator is not None else None
         node = CiteNode(name=name, attrs=dict(attrs.items()), line=line)
 
@@ -67,6 +69,7 @@ def parse_xml(xml_text: str) -> CiteNode:
     parser = make_parser()
 
     try:
+        # keep parsing local files boring: no external entity fetching
         parser.setFeature(handler.feature_external_ges, False)
         parser.setFeature(handler.feature_external_pes, False)
     except Exception:

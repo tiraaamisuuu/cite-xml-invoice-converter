@@ -193,6 +193,7 @@ def validate_invoice(invoice: Invoice, today: date | None = None) -> list[Valida
     today = today or date.today()
     issues: list[ValidationIssue] = []
 
+    # start with the easy missing-field checks, then do the maths
     _require(invoice.invoice_number, "MissingDocumentNumber", "invoiceNumber", issues)
     _require(invoice.invoice_date, "MissingDocumentDate", "invoiceDate", issues)
     _require(invoice.currency, "MissingCurrency", "currency", issues)
@@ -284,6 +285,7 @@ def _validate_lines(lines: list[LineItem], issues: list[ValidationIssue]) -> Non
 
     for index, line in enumerate(lines, start=1):
         label = line.line_number.value or str(index)
+        # use the invoice line number in messages when we have it, because humans read those
         prefix = f"lineItems[{label}]"
 
         _require(line.line_number, "MissingLineNumber", f"{prefix}.lineNumber", issues)
@@ -298,6 +300,7 @@ def _validate_lines(lines: list[LineItem], issues: list[ValidationIssue]) -> Non
         if quantity is None or unit_amount is None or total_amount is None:
             continue
 
+        # money stays as decimal so 0.1 + 0.2 nonsense never gets invited in
         expected = quantity * unit_amount
         if not _close_enough(expected, total_amount):
             issues.append(
@@ -314,6 +317,7 @@ def _validate_totals(invoice: Invoice, issues: list[ValidationIssue]) -> None:
     line_totals = [_decimal_value(line.total_amount, "lineItems.totalAmount", issues) for line in invoice.line_items]
     line_tax_amounts = [_decimal_value(line.tax_amount, "lineItems.taxAmount", issues) for line in invoice.line_items]
 
+    # if a line amount is broken, don't pile on with noisy header-total guesses
     if any(value is None for value in line_totals):
         return
 
@@ -324,6 +328,7 @@ def _validate_totals(invoice: Invoice, issues: list[ValidationIssue]) -> None:
     tax_total = _decimal_value(invoice.total_tax_amount, "totalTaxAmount", issues)
     invoice_total = _decimal_value(invoice.total_amount, "totalAmount", issues)
 
+    # three simple checks: lines -> goods, line vat -> vat total, goods + vat -> invoice
     if goods_total is not None and not _close_enough(line_total_sum, goods_total):
         issues.append(
             ValidationIssue(
@@ -361,6 +366,7 @@ def _validate_tax_summaries(invoice: Invoice, issues: list[ValidationIssue]) -> 
     for index, summary in enumerate(invoice.tax_summaries, start=1):
         prefix = f"taxSummaries[{index}]"
 
+        # a vat row without a code or rate is too vague to trust
         if not summary.tax_code.is_present and not summary.effective_tax_rate.is_present:
             issues.append(
                 ValidationIssue(

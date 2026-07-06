@@ -9,6 +9,7 @@ from .xml_tree import CiteNode, parse_xml
 def parse_invoice(xml_text: str) -> Invoice:
     root = parse_xml(xml_text)
 
+    # cite is mostly "same tag, different qualifier", so the code below reads by codes
     invoice = Invoice(
         invoice_number=_document_number(root),
         order_number=_header_reference(root, "ON"),
@@ -40,6 +41,7 @@ def _field(value: str | None, line: int | None) -> FieldValue:
 
 
 def _document_number(root: CiteNode) -> FieldValue:
+    # the sample has the number twice; prefer the document wrapper, then fall back to bgm
     root_value = root.attr("DocNumber")
     if root_value:
         return _field(root_value, root.line)
@@ -66,6 +68,7 @@ def _normalise_date(raw: str | None) -> str | None:
     if value is None:
         return None
 
+    # keep json dates boring even when cite sends friendly dates like "15 jan 2026"
     for date_format in ("%d %b %Y", "%d %B %Y", "%Y-%m-%d"):
         try:
             return datetime.strptime(value, date_format).date().isoformat()
@@ -105,6 +108,7 @@ def _party(root: CiteNode, qualifier: str) -> Party | None:
 
 
 def _parse_party(node: CiteNode) -> Party:
+    # c058 repeats: first value is the name, then the address lines follow
     address_values = [
         _field(child.attr("E.3124.NameAndAddress.D"), child.line)
         for child in node.children_named("C.C058.NameAndAddress")
@@ -179,6 +183,7 @@ def _party_reference(node: CiteNode, qualifier: str) -> FieldValue:
 
 
 def _line_item(node: CiteNode) -> LineItem:
+    # line child segments are grouped under lin in the starter fixture
     item_id = node.first_child("C.C212.ItemNumberIdentification")
     description_segment = node.first_child("S.IMD.ItemDescription")
     description = description_segment.first_child("C.C273.ItemDescription") if description_segment else None
@@ -209,6 +214,7 @@ def _header_moa(root: CiteNode, qualifier: str) -> FieldValue:
 
 
 def _node_moa(node: CiteNode, qualifier: str) -> FieldValue:
+    # moa is just "an amount" until the qualifier tells us which amount it is
     for moa in node.children_named("S.MOA.MonetaryAmount"):
         composite = moa.first_child("C.C516.MonetaryAmount")
         if composite and composite.attr("E.5025.MonetaryAmountType.Q") == qualifier:
@@ -221,6 +227,7 @@ def _tax_summaries(root: CiteNode) -> list[TaxSummary]:
     summaries: list[TaxSummary] = []
     children = root.children
 
+    # in the sample, a header tax segment is followed by the matching moa 150 amount
     for index, node in enumerate(children):
         if node.name != "S.TAX.DutyTaxFee":
             continue
