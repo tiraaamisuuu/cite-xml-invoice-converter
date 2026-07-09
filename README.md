@@ -1,10 +1,9 @@
-# CITE invoice validator and JSON converter
+# CITE invoice validator
 
-Barebones Python implementation of the graduate starter project: read a CITE XML
-sales invoice, validate the important business rules, and convert valid invoices
-into the canonical Causeway JSON shape.
+A small Python tool for checking CITE XML sales invoices and turning the valid
+ones into a cleaner JSON format.
 
-The project is deliberately split into a reusable engine plus thin interfaces:
+CITE XML is pretty noisy, so this project keeps the moving parts separate:
 
 ```text
 CITE XML
@@ -15,25 +14,27 @@ CITE XML
   -> CLI wrapper
 ```
 
-The CLI is only a wrapper. The validation and conversion logic lives in
-`src/cite_invoice`, so a future drag-and-drop UI can call the same engine.
+The command line bit is just a wrapper. The actual parsing, validation, and
+conversion code lives in `src/cite_invoice`, so another interface could reuse the
+same logic later.
 
 ## Current status
 
-This is a starter version, not the final submission.
+This is a barebones version, but it already handles the supplied sample invoice
+end to end.
 
-Implemented:
+What it does right now:
 
-- Parse the supplied sample CITE XML fixture.
+- Parses the sample CITE XML fixture.
 - Extract invoice number, dates, currency, supplier, buyer, totals, line items,
   and VAT summary data.
-- Validate mandatory fields, currency, future dates, line maths, header totals,
+- Validates mandatory fields, currency, future dates, line maths, header totals,
   and VAT totals.
-- Convert the known-good fixture to the expected JSON shape.
-- Run against a single XML file or a folder of XML files.
-- Unit tests for the known-good fixture and a few deliberately broken variants.
+- Converts the known-good fixture to the expected JSON shape.
+- Runs against a single XML file or a folder of XML files.
+- Includes tests for the good sample and a few deliberately broken versions.
 
-Still to confirm:
+Things still worth checking:
 
 - Exact CITE segment-group nesting against a real Tradex CITE document.
 - Full field-by-field coverage from the Confluence mapping specification.
@@ -44,10 +45,12 @@ Still to confirm:
 - Python 3.11+
 - No third-party runtime dependencies
 
-The parser uses Python's standard-library SAX parser so validation errors can
-include source line numbers.
+The parser uses Python's built-in SAX parser so validation errors can include
+source line numbers.
 
 ## Setup
+
+Run these from the repo root:
 
 ```bash
 python3 -m venv .venv
@@ -75,10 +78,17 @@ Summary: 1 passed, 0 failed
 cite-invoice tests/fixtures --out converted-json
 ```
 
-For each valid invoice, the CLI writes a JSON file to the output folder. Invalid
-invoices print validation errors and do not produce JSON.
+For each valid invoice, the CLI writes a JSON file to the output folder. If a
+file fails validation, it prints the errors and skips the JSON output for that
+file.
 
 ## Run tests
+
+```bash
+python -m unittest
+```
+
+If you are not running from the repo root, use:
 
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests
@@ -86,7 +96,7 @@ PYTHONPATH=src python -m unittest discover -s tests
 
 ## Engine API
 
-The engine can be used directly from Python:
+The engine can also be used directly from Python:
 
 ```python
 from cite_invoice import validate_and_convert
@@ -103,7 +113,7 @@ else:
 
 ## Validation rules
 
-The current validator checks:
+The validator currently checks:
 
 - Mandatory header fields: document number, document date, currency, supplier,
   and buyer.
@@ -120,7 +130,7 @@ The current validator checks:
 
 ```text
 src/cite_invoice/
-  engine.py       Public validate-and-convert API
+  engine.py       main validate-and-convert API
   parser.py       CITE XML -> internal invoice model
   validator.py    Business validation rules
   converter.py    Internal model -> canonical JSON dict
@@ -129,7 +139,7 @@ src/cite_invoice/
   __main__.py     CLI wrapper
 
 tests/
-  fixtures/       Supplied sample CITE XML and expected JSON
+  fixtures/       sample CITE XML and expected JSON
   test_engine.py  Unit tests
 
 docs/
@@ -138,8 +148,8 @@ docs/
   prompt-log.md   Short AI collaboration log
 ```
 
-## Notes for the final project
+## Notes
 
-Before treating this as finished, cross-check every extracted CITE tag and
-qualifier against the official mapping specification. This repo currently uses
-only the supplied sample and fixture README as its source of truth.
+Before treating this as finished, every extracted CITE tag and qualifier should
+be cross-checked against the official mapping specification. Right now this repo
+uses the sample invoice and fixture README as its source of truth.
