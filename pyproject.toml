@@ -12,6 +12,10 @@ dependencies = []
 
 [project.scripts]
 cite-invoice = "cite_invoice.__main__:main"
+cite-invoice-reader = "cite_invoice.reader:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+cite_invoice = ["web/*.html", "web/*.css", "web/*.js"]

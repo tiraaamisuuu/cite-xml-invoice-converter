@@ -50,7 +50,10 @@ source line numbers.
 
 ## Setup
 
-Run these from the repo root:
+You can run this project without installing it. The longer commands use
+`PYTHONPATH=src`, which just tells Python where the local package lives.
+
+If you want the shorter commands like `cite-invoice`, use a virtual environment:
 
 ```bash
 python3 -m venv .venv
@@ -59,6 +62,13 @@ python -m pip install -e .
 ```
 
 ## Run the sample
+
+```bash
+PYTHONPATH=src python3 -m cite_invoice tests/fixtures/sample-invoice.cite.xml --out sample-invoice.out.json
+```
+
+If you installed the project in a virtual environment, this shorter version also
+works:
 
 ```bash
 cite-invoice tests/fixtures/sample-invoice.cite.xml --out sample-invoice.out.json
@@ -75,12 +85,30 @@ Summary: 1 passed, 0 failed
 ## Run a folder
 
 ```bash
-cite-invoice tests/fixtures --out converted-json
+PYTHONPATH=src python3 -m cite_invoice tests/fixtures --out converted-json
 ```
 
 For each valid invoice, the CLI writes a JSON file to the output folder. If a
 file fails validation, it prints the errors and skips the JSON output for that
 file.
+
+## Open the reader
+
+There is also a small browser reader for looking at an invoice in a cleaner way:
+
+```bash
+PYTHONPATH=src python3 -m cite_invoice.reader
+```
+
+If you installed the project in a virtual environment, the shorter command is:
+
+```bash
+cite-invoice-reader
+```
+
+It opens a local page where you can drop a CITE XML file, see the invoice
+summary, line items, validation messages, and the JSON preview. If the invoice
+is valid, the page also lets you download the JSON.
 
 ## Run tests
 
@@ -134,6 +162,7 @@ src/cite_invoice/
   parser.py       CITE XML -> internal invoice model
   validator.py    Business validation rules
   converter.py    Internal model -> canonical JSON dict
+  reader.py       local browser reader
   xml_tree.py     Tiny SAX-backed XML tree with line numbers
   models.py       Dataclasses used by the engine
   __main__.py     CLI wrapper

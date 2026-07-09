@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from cite_invoice import validate_and_convert
+from cite_invoice.reader import _result_payload
 
 
 FIXTURES = ROOT / "tests" / "fixtures"
@@ -74,6 +75,18 @@ class EngineTests(unittest.TestCase):
         result = validate_and_convert(xml, today=date(2026, 7, 6))
 
         self.assertIssue(result, "HeaderTotalMismatch")
+
+    def test_reader_payload_has_summary_and_json(self) -> None:
+        xml = _fixture_text("sample-invoice.cite.xml")
+
+        result = validate_and_convert(xml, today=date(2026, 7, 6))
+        payload = _result_payload(result)
+
+        self.assertTrue(payload["isValid"])
+        self.assertEqual("18499569", payload["invoice"]["invoiceNumber"])
+        self.assertEqual("Speedy Hire", payload["invoice"]["sender"]["name"])
+        self.assertEqual(2, len(payload["invoice"]["lineItems"]))
+        self.assertEqual("18499569", payload["document"]["invoiceNumber"])
 
     def assertIssue(self, result, rule: str) -> None:
         rules = [issue.rule for issue in result.issues]

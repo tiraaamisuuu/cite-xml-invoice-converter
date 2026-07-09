@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  extra valid sample invoice for testing the parser, cli, and reader.
+  figures reconcile: GBP 130.00 goods + 26.00 VAT = 156.00 total.
+-->
+<DOCUMENT DocNumber="20004501" DocType="380" Version="2.01.02">
+
+  <S.UNB.InterchangeHeader E.0020.InterchangeControlReference.D="EXAMPLE2">
+    <C.S002.InterchangeSender E.0004.SenderIdentification.D="Northwind Materials" E.0007.PartnerIdentificationCode.Q="ZZZ" E.0008.AddressForReverseRouting.D=""/>
+    <C.S003.InterchangeRecipient E.0010.RecipientIdentification.D="220010" E.0007.PartnerIdentificationCode.Q="ZZZ" E.0014.RoutingAddress.D="MAIN"/>
+  </S.UNB.InterchangeHeader>
+
+  <S.UNH.MessageHeader E.0062.MessageReferenceNumber.D="MSG-20004501">
+    <C.S009.MessageIdentifier E.0054.MessageTypeReleaseNumber.D="92.1" E.0065.MessageTypeIdentifier.C="" E.0052.MessageTypeVersionNumber.D="D" E.0051.ControllingAgency.D="UN" E.0057.AssociationAssigned.C="EAN0006"/>
+  </S.UNH.MessageHeader>
+
+  <S.BGM.BeginingOfMessage E.4343.ResponseType.C="AD" E.1225.MessageFunction.C="" E.1004.DocumentNumber.D="20004501">
+    <C.C002.DocumentName E.1001.DocumentName.C="380"/>
+  </S.BGM.BeginingOfMessage>
+
+  <S.DTM.DateTimePeriod>
+    <C.C507.DateTimePeriod E.2380.DateTimePeriod.D="25 Jun 2026" E.2379.DateTimePeriodFormat.Q="DD MON CCYY" E.2005.DateTimePeriod.Q="137"/>
+  </S.DTM.DateTimePeriod>
+  <S.DTM.DateTimePeriod>
+    <C.C507.DateTimePeriod E.2380.DateTimePeriod.D="25 Jun 2026" E.2379.DateTimePeriodFormat.Q="DD MON CCYY" E.2005.DateTimePeriod.Q="131"/>
+  </S.DTM.DateTimePeriod>
+
+  <S.RFF.Reference>
+    <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="PO-90021"/>
+  </S.RFF.Reference>
+  <S.RFF.Reference>
+    <C.C506.Reference E.1153.Reference.Q="IT" E.1154.ReferenceNumber.D="ACME-004"/>
+  </S.RFF.Reference>
+
+  <S.NAD.NameAndAddress E.3035.Party.Q="SU">
+    <C.C082.PartyIdentification E.3039.PartyIdentification.D="Northwind Materials" E.1131.CodeList.Q="164" E.3055.CodeListRespAgency.C="136"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Northwind Materials"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Unit 4 Foundry Lane"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Leeds"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="West Yorkshire"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D=""/>
+    <C.C059.Street E.3251.PostCode.D="LS1 4AB" E.3207.Country.C="GB"/>
+    <S.CTA.ContactInformation>
+      <C.C056.DepartmentOrEmployee E.3412.DepartmentOrEmployee.D="Maya Patel"/>
+    </S.CTA.ContactInformation>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="0113 555 0199" E.3155.CommunicationChannel.Q="TE"/>
+    </S.COM.CommunicationContact>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="accounts@northwindmaterials.example" E.3155.CommunicationChannel.Q="EM"/>
+    </S.COM.CommunicationContact>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="VA" E.1154.ReferenceNumber.D="987 6543 21"/>
+    </S.RFF.Reference>
+  </S.NAD.NameAndAddress>
+
+  <S.NAD.NameAndAddress E.3035.Party.Q="BY">
+    <C.C082.PartyIdentification E.3039.PartyIdentification.D="Acme Build Ltd" E.1131.CodeList.Q="164" E.3055.CodeListRespAgency.C="136"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Acme Build Ltd"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Project Office"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="12 Bridge Street"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D="Bristol"/>
+    <C.C058.NameAndAddress E.3124.NameAndAddress.D=""/>
+    <C.C059.Street E.3251.PostCode.D="BS1 2AB" E.3207.Country.C="GB"/>
+    <S.CTA.ContactInformation>
+      <C.C056.DepartmentOrEmployee E.3412.DepartmentOrEmployee.D="Jordan Lee"/>
+    </S.CTA.ContactInformation>
+    <S.COM.CommunicationContact>
+      <C.C076.CommunicationContact E.3148.CommunicationNumber.D="invoices@acmebuild.example" E.3155.CommunicationChannel.Q="EM"/>
+    </S.COM.CommunicationContact>
+  </S.NAD.NameAndAddress>
+
+  <S.PAT.TermsOfPaymentBasis E.4279.TermsOfPaymentType.Q="ZZZ">
+    <C.C110.TermsOfPayment E.4276.TermsOfPayment.D="Net 14 Days"/>
+  </S.PAT.TermsOfPaymentBasis>
+
+  <S.LIN.LineItem E.1082.LineItemNumber.D="1">
+    <C.C212.ItemNumberIdentification E.7143.ItemNumberType.C="SA" E.7140.ItemNumber.D="TIM100"/>
+    <S.IMD.ItemDescription E.7077.ItemDescriptionType.C="F">
+      <C.C273.ItemDescription E.7008.ItemDescription.D="Timber board 2.4m" E.7009.ItemDescriptionIdentification.C="4"/>
+    </S.IMD.ItemDescription>
+    <S.QTY.Quantity>
+      <C.C186.Quantity E.6063.Quantity.Q="47" E.6060.Quantity.D="8" E.6411.UnitOfMeasurement.Q="EA"/>
+    </S.QTY.Quantity>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="203" E.5004.MonetaryAmount.D="100.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="20.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.PRI.Price>
+      <C.C509.PriceIformation E.5284.UnitPriceBasis.C="EA" E.6411.UnitOfMeasurement.Q="EA" E.5387.PriceType.Q="GRP" E.5125.Price.Q="CAL" E.5118.Price.D="12.50"/>
+    </S.PRI.Price>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="PO-90021"/>
+    </S.RFF.Reference>
+    <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+      <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+      <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+    </S.TAX.DutyTaxFee>
+  </S.LIN.LineItem>
+
+  <S.LIN.LineItem E.1082.LineItemNumber.D="2">
+    <C.C212.ItemNumberIdentification E.7143.ItemNumberType.C="SA" E.7140.ItemNumber.D="FIX050"/>
+    <S.IMD.ItemDescription E.7077.ItemDescriptionType.C="F">
+      <C.C273.ItemDescription E.7008.ItemDescription.D="Fixing pack 50mm" E.7009.ItemDescriptionIdentification.C="4"/>
+    </S.IMD.ItemDescription>
+    <S.QTY.Quantity>
+      <C.C186.Quantity E.6063.Quantity.Q="47" E.6060.Quantity.D="4" E.6411.UnitOfMeasurement.Q="EA"/>
+    </S.QTY.Quantity>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="203" E.5004.MonetaryAmount.D="20.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="4.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.PRI.Price>
+      <C.C509.PriceIformation E.5284.UnitPriceBasis.C="EA" E.6411.UnitOfMeasurement.Q="EA" E.5387.PriceType.Q="GRP" E.5125.Price.Q="CAL" E.5118.Price.D="5.00"/>
+    </S.PRI.Price>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="PO-90021"/>
+    </S.RFF.Reference>
+    <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+      <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+      <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+    </S.TAX.DutyTaxFee>
+  </S.LIN.LineItem>
+
+  <S.LIN.LineItem E.1082.LineItemNumber.D="3">
+    <C.C212.ItemNumberIdentification E.7143.ItemNumberType.C="SA" E.7140.ItemNumber.D="DEL001"/>
+    <S.IMD.ItemDescription E.7077.ItemDescriptionType.C="F">
+      <C.C273.ItemDescription E.7008.ItemDescription.D="Site delivery" E.7009.ItemDescriptionIdentification.C="4"/>
+    </S.IMD.ItemDescription>
+    <S.QTY.Quantity>
+      <C.C186.Quantity E.6063.Quantity.Q="47" E.6060.Quantity.D="1" E.6411.UnitOfMeasurement.Q="EA"/>
+    </S.QTY.Quantity>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="203" E.5004.MonetaryAmount.D="10.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.MOA.MonetaryAmount>
+      <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="2.00"/>
+    </S.MOA.MonetaryAmount>
+    <S.PRI.Price>
+      <C.C509.PriceIformation E.5284.UnitPriceBasis.C="EA" E.6411.UnitOfMeasurement.Q="EA" E.5387.PriceType.Q="GRP" E.5125.Price.Q="CAL" E.5118.Price.D="10.00"/>
+    </S.PRI.Price>
+    <S.RFF.Reference>
+      <C.C506.Reference E.1153.Reference.Q="ON" E.1154.ReferenceNumber.D="PO-90021"/>
+    </S.RFF.Reference>
+    <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+      <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+      <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+    </S.TAX.DutyTaxFee>
+  </S.LIN.LineItem>
+
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="79" E.5004.MonetaryAmount.D="130.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="125" E.5004.MonetaryAmount.D="130.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="176" E.5004.MonetaryAmount.D="26.00"/>
+  </S.MOA.MonetaryAmount>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="77" E.5004.MonetaryAmount.D="156.00"/>
+  </S.MOA.MonetaryAmount>
+
+  <S.TAX.DutyTaxFee E.5283.DutyTaxFeeFunction.Q="7">
+    <C.C241.DutyTaxFeeType E.5153.DutyTaxFeeType.C="VAT"/>
+    <C.C243.DutyTaxFee E.5305.DutyTaxFeeCategory.C="S" E.5278.DutyTaxFeeRate.D="20.00"/>
+  </S.TAX.DutyTaxFee>
+  <S.MOA.MonetaryAmount>
+    <C.C516.MonetaryAmount E.5025.MonetaryAmountType.Q="150" E.5004.MonetaryAmount.D="26.00"/>
+  </S.MOA.MonetaryAmount>
+
+  <S.CUX.Currencies>
+    <C.C504.CurrencyDetails E.6347.CurrencyDetail.Q="1" E.6345.Currency.C="GBP"/>
+  </S.CUX.Currencies>
+
+</DOCUMENT>

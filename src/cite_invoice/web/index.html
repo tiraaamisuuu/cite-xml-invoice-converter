@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CITE invoice reader</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-title">CITE invoice reader</span>
+        <span id="fileName" class="file-name">no file loaded</span>
+      </div>
+      <div class="actions">
+        <button id="openButton" class="button" type="button">open xml</button>
+        <button id="downloadButton" class="button" type="button" disabled>download json</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <label id="dropZone" class="drop-zone" for="fileInput">
+          <span class="drop-title">drop xml</span>
+          <span class="drop-subtitle">or choose a file</span>
+        </label>
+        <input id="fileInput" type="file" accept=".xml,.cite.xml,text/xml,application/xml">
+
+        <section class="panel status-panel">
+          <div id="statusPill" class="status-pill neutral">waiting</div>
+          <div id="statusText" class="status-text">load a CITE XML invoice to read it.</div>
+        </section>
+
+        <section class="panel">
+          <h2>invoice</h2>
+          <dl id="invoiceDetails" class="details"></dl>
+        </section>
+
+        <section class="panel">
+          <h2>parties</h2>
+          <dl id="partyDetails" class="details"></dl>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="strip">
+          <div>
+            <h2>validation</h2>
+            <div id="issueList" class="issues"></div>
+          </div>
+        </section>
+
+        <section class="lines">
+          <div class="section-head">
+            <h2>line items</h2>
+            <span id="lineCount" class="muted">0 lines</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>line</th>
+                  <th>code</th>
+                  <th>description</th>
+                  <th>qty</th>
+                  <th>uom</th>
+                  <th>unit price</th>
+                  <th>net</th>
+                  <th>vat</th>
+                </tr>
+              </thead>
+              <tbody id="lineItems"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="editor">
+          <div class="section-head">
+            <h2>json</h2>
+            <span id="jsonState" class="muted">empty</span>
+          </div>
+          <pre id="jsonPreview" class="json-preview">open an invoice to see the json here.</pre>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
