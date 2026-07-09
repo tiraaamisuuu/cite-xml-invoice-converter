@@ -13,20 +13,24 @@ from typing import Any
 from .engine import validate_and_convert
 from .models import EngineResult, FieldValue, Invoice, Party
 
-HOST = "127.0.0.1"
+DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Open the CITE invoice reader GUI.")
+    parser.add_argument("--host", default=DEFAULT_HOST, help="Host to bind to. Use 0.0.0.0 for other devices.")
     parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="Port to run the local reader on.")
     parser.add_argument("--no-open", action="store_true", help="Start the server without opening a browser.")
     args = parser.parse_args()
 
-    server = _make_server(args.port)
-    url = f"http://{HOST}:{server.server_port}"
+    server = _make_server(args.host, args.port)
+    browser_host = "127.0.0.1" if args.host == "0.0.0.0" else args.host
+    url = f"http://{browser_host}:{server.server_port}"
 
     print(f"CITE invoice reader running at {url}")
+    if args.host == "0.0.0.0":
+        print(f"Other devices can use http://<this-computer-ip>:{server.server_port}")
     print("Press Ctrl+C to stop.")
 
     if not args.no_open:
@@ -96,10 +100,10 @@ class ReaderHandler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
 
-def _make_server(port: int) -> ThreadingHTTPServer:
+def _make_server(host: str, port: int) -> ThreadingHTTPServer:
     for candidate in range(port, port + 20):
         try:
-            return ThreadingHTTPServer((HOST, candidate), ReaderHandler)
+            return ThreadingHTTPServer((host, candidate), ReaderHandler)
         except OSError:
             continue
 
