@@ -118,25 +118,6 @@ After loading an XML file:
 
 ![reader after loading xml](docs/screenshots/postXML.png)
 
-## Run the reader on another machine
-
-By default the reader only listens on your own computer. To let another device
-reach it, run:
-
-```bash
-PYTHONPATH=src python3 -m cite_invoice.reader --host 0.0.0.0 --port 8765
-```
-
-Then open this from another device on the same network:
-
-```text
-http://<that-computer-ip>:8765
-```
-
-If you want to reach it from outside your home network, use a private tunnel or
-VPN such as Tailscale rather than opening the port straight to the internet. The
-reader is intentionally simple and does not have a login screen yet.
-
 ## Run tests
 
 ```bash
